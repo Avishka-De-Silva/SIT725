@@ -1,0 +1,43 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.navbar-size {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.user-image-size {
+  height: 56px;
+  margin: 4px 0;
+}
+
+.main-body {
+  background-color: #2f0fe9;
+  color: rgb(241, 244, 245);
+}
+
+.materialboxed-image {
+  margin: 0 auto;
+  height: 400px;
+}
+
+.click-me-button {
+  background-color: #3f0833;
+  margin-top: 50px;
+}
+
+.container {
+  margin-bottom: 0 !important;
+}
+
+.row {
+  margin-bottom: 0;
+}
+
+.card {
+  margin-bottom: 0;
+}

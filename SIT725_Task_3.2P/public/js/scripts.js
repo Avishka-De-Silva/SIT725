@@ -1,13 +1,3 @@
-const cardList = [
-  {
-    title: "Civic",
-    image: "images/car1.jpg",
-  },
-  {
-    title: "Outlander",
-    image: "images/car2.jpg",
-  },
-];
 const clickMe = () => {
   alert("Thanks for clicking me. Hope you have a nice day!");
 };
@@ -43,11 +33,20 @@ const addCards = (items) => {
     $("#card-section").append(itemToAppend);
   });
 };
+
 $(document).ready(function () {
   $(".materialboxed").materialbox();
   $("#formSubmit").click(() => {
     submitForm();
   });
-  addCards(cardList);
+  getProjects();
   $(".modal").modal();
 });
+
+const getProjects = () => {
+  $.get("/api/projects", (response) => {
+    if (response.statusCode == 200) {
+      addCards(response.data);
+    }
+  });
+};

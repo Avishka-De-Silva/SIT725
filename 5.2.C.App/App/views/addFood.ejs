@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Food Item</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1>Add New Food Item</h1>
+
+    <!-- Form to create a new food item -->
+    <form action="/addFood" method="POST">
+      <label for="name">Food Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="price">Food Price:</label>
+      <input type="text" id="price" name="price" required />
+
+      <button type="submit">Add Food</button>
+    </form>
+
+    <a href="/">Back to Menu</a>
+  </body>
+</html>

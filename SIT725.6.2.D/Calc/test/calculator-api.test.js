@@ -10,6 +10,7 @@ describe("Calculator API", function () {
   const request = require("request");
   const baseUrl = "http://localhost:3000";
 
+  // API root reachable
   it("returns status 200 to check if API root is reachable", function (done) {
     request(baseUrl, function (error, response, body) {
       expect(response.statusCode).to.equal(200);
@@ -68,6 +69,63 @@ describe("Calculator API", function () {
         expect(res.statusCode).to.equal(400);
         const result = JSON.parse(body);
         expect(result.error).to.include("Invalid operation");
+        done();
+      }
+    );
+  });
+
+  // Large number input
+  it("should correctly handle very large number inputs", function (done) {
+    const largeNumber = Number.MAX_SAFE_INTEGER;
+    request.get(
+      `${baseUrl}/calculate`,
+      { qs: { operation: "add", a: largeNumber, b: largeNumber } },
+      function (err, res, body) {
+        expect(res.statusCode).to.equal(200);
+        const result = JSON.parse(body);
+        expect(result.result).to.equal(largeNumber + largeNumber);
+        done();
+      }
+    );
+  });
+
+  // Missing both parameters
+  it("should return error when both parameters are missing", function (done) {
+    request.get(
+      `${baseUrl}/calculate`,
+      { qs: { operation: "add" } },
+      function (err, res, body) {
+        expect(res.statusCode).to.equal(400);
+        const result = JSON.parse(body);
+        expect(result.error).to.include("Invalid or missing parameters");
+        done();
+      }
+    );
+  });
+
+  // Only one non-numeric input
+  it("should return error when one input is non-numeric", function (done) {
+    request.get(
+      `${baseUrl}/calculate`,
+      { qs: { operation: "subtract", a: "10", b: "abc" } },
+      function (err, res, body) {
+        expect(res.statusCode).to.equal(400);
+        const result = JSON.parse(body);
+        expect(result.error).to.include("Invalid or missing parameters");
+        done();
+      }
+    );
+  });
+
+  // Empty query parameters
+  it("should return error when query parameters are empty", function (done) {
+    request.get(
+      `${baseUrl}/calculate`,
+      { qs: {} },
+      function (err, res, body) {
+        expect(res.statusCode).to.equal(400);
+        const result = JSON.parse(body);
+        expect(result.error).to.include("Invalid or missing parameters");
         done();
       }
     );
